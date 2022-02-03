@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Movie List";
+}
+<!--Displays a list of all current movies in the database as well as edit and delete functions-->
+@model List<MovieSubmitModel>
+<table class="table table-bordered table-striped">
+
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Category</td>
+            <td>Title</td>
+            <td>Year</td>
+            <td>Director</td>
+            <td>Rating</td>
+            <td>Edited</td>
+            <td>Lent To</td>
+            <td>Notes</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@movie.Category.CategoryName</td>
+                    <td>@movie.Title</td>
+                    <td>@movie.Year</td>
+                    <td>@movie.Director</td>
+                    <td>@movie.Rating</td>
+                    <td>@movie.Edited</td>
+                    <td>@movie.LentTo</td>
+                    <td>@movie.Notes</td>
+
+                    <td><a asp-controller="Home" asp-action="Edit" asp-route-movieid="@movie.MovieId">Edit</a></td>
+                    <td><a asp-controller="Home" asp-action="Delete" asp-route-movieid="@movie.MovieId">Delete</a></td>
+                </tr>
+            }
+    </tbody>
+
+</table>

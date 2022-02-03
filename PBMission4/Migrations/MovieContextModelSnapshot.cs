@@ -15,15 +15,70 @@ namespace PBMission4.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
+            modelBuilder.Entity("PBMission4.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryName = "VHS"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            CategoryName = "Action/Adventure"
+                        });
+                });
+
             modelBuilder.Entity("PBMission4.Models.MovieSubmitModel", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -36,7 +91,8 @@ namespace PBMission4.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(25);
 
                     b.Property<string>("Rating")
                         .IsRequired()
@@ -51,13 +107,15 @@ namespace PBMission4.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("MovieSubmissions");
 
                     b.HasData(
                         new
                         {
                             MovieId = 1,
-                            Category = "Comedy",
+                            CategoryId = 1,
                             Director = "Adam McKay",
                             Edited = false,
                             Rating = "PG-13",
@@ -67,7 +125,7 @@ namespace PBMission4.Migrations
                         new
                         {
                             MovieId = 2,
-                            Category = "Comedy",
+                            CategoryId = 1,
                             Director = "Edgar Wright",
                             Edited = false,
                             Rating = "PG-13",
@@ -77,13 +135,22 @@ namespace PBMission4.Migrations
                         new
                         {
                             MovieId = 3,
-                            Category = "Horror/Suspense",
+                            CategoryId = 2,
                             Director = "John Carpenter",
                             Edited = false,
                             Rating = "PG-13",
                             Title = "The Thing",
                             Year = (ushort)1982
                         });
+                });
+
+            modelBuilder.Entity("PBMission4.Models.MovieSubmitModel", b =>
+                {
+                    b.HasOne("PBMission4.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
