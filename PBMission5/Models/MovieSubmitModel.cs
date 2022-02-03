@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
+//Create the models for movie entries in the database
 namespace PBMission4.Models
 {
     public class MovieSubmitModel
@@ -12,8 +13,10 @@ namespace PBMission4.Models
         [Required]
         public int MovieId { get; set; }
 
+        // Build foreign key relationship
         [Required]
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public string Title { get; set; }
